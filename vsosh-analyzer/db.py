@@ -50,4 +50,5 @@ def init_schema(con):
     CREATE INDEX IF NOT EXISTS idx_results_participant ON results(participant_id);
     CREATE INDEX IF NOT EXISTS idx_snapshots_tour_minute ON snapshots(tour, minute);
     ''')
+    
     con.commit()
