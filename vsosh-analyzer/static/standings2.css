@@ -158,12 +158,12 @@ s {
     font-size: x-small;
 }
 
-.row-win-0 { background-color: #fff1bc; }
-.row-win-1 { background-color: #fffbea; }
-.row-prize-0 { background-color: #e4f8f3; }
-.row-prize-1 { background-color: #f5ffff; }
+.row-win-0 { background-color: #ffeca8; }
+.row-win-1 { background-color: #ffeca8; }
+.row-prize-0 { background-color: #cdfff3; }
+.row-prize-1 { background-color: #cdfff3; }
 .row-selected-0 { background-color: #c8e8f8; }
-.row-selected-1 { background-color: #d0f0ff; }
+.row-selected-1 { background-color: #c8e8f8; }
 
 .row00 { background-color: #f8f8f8; }
 .row01 { background-color: #ffffff; }
