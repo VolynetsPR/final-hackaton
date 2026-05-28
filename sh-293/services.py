@@ -56,7 +56,7 @@ def filtered_result_rows(con, snapshot_id, mode, class_filter='all', region='all
     for r in con.execute('''SELECT p.*, r.* FROM results r JOIN participants p ON p.id=r.participant_id
                             WHERE r.snapshot_id=?''', (snapshot_id,)).fetchall():
         cls = r['class_num']
-        if(int(class_filter) != cls):
+        if(class_filter.isnumeric() and int(class_filter) != cls):
             continue
         if class_filter == '10_down' and cls > 10:
             continue
