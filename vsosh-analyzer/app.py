@@ -21,14 +21,6 @@ CLASS_FILTERS = {
 }
 TOUR_MODES = {'first':1, 'second':2, 'both':3}
 
-@app.before_request
-def ensure_db():
-    if not os.path.exists(DB_PATH) and request.endpoint != 'static':
-        try:
-            init_db.main()
-        except Exception:
-            pass
-
 @app.route('/')
 def index():
     return render_template('index.html')

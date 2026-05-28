@@ -30,12 +30,3 @@ def _load():
     _cache = rows
     return rows
 
-def get_school(full_name):
-    """Возвращает (школа, регион школы) по ФИО участника или (None, None)."""
-    q = normalize_name(full_name)
-    parts = q.split()
-    for nm, school, region, _ in _load():
-        # Москва в протоколе часто без отчества: сравниваем по началу ФИО/первым двум словам.
-        if q == nm or q.startswith(nm + ' ') or (len(parts) >= 2 and nm == ' '.join(parts[:2])):
-            return school, region
-    return None, None
