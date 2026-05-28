@@ -1,7 +1,5 @@
 #  Аналитика ЗЭ ВсОШ по информатике 2024 года
 
-Стек: **Python + Flask + HTML/CSS + SQLite**.
-
 ## Запуск
 ```bash
 python3 -m pip install -r requirements.txt
