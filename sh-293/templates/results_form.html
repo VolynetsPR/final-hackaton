@@ -1,1 +1,89 @@
-{% extends 'base.html' %}{% block content %}<div class="card"><h1>Результаты</h1><p class="text-muted">Выберите параметры. Таблица откроется в новой вкладке.</p><form action="{{ url_for('results_table') }}" target="_blank" method="get"><div class="row"><div class="col-md-4"><label class="form-label">Тур</label><select name="tour" class="form-select"><option value="first">Первый тур</option><option value="second">Второй тур</option><option value="both" selected>Оба тура</option></select></div><div class="col-md-4"><label class="form-label">Класс</label><select name="class_filter" class="form-select">{% for k,v in class_filters.items() %}<option value="{{k}}">{{v}}</option>{% endfor %}</select></div><div class="col-md-4"><label class="form-label">Оформление</label><select name="style" class="form-select"><option value="clean">Чистая таблица</option><option value="diplomas">Выделить дипломы</option></select></div></div><div class="row"><div class="col-md-6"><label class="form-label">Регион</label><select name="region" id="region" class="form-select"><option value="all">Все регионы</option>{% for r in regions %}<option value="{{r}}">{{r}}</option>{% endfor %}</select><div class="muted-small">В списке регионы с 3+ участниками.</div></div><div class="col-md-6"><label class="form-label">Школа</label><select name="school" id="school" class="form-select"><option value="all">Все школы</option></select><div class="muted-small">Для Москвы/Санкт-Петербурга — школы с 3+ участниками.</div></div></div><div class="row"><div class="col-md-6"><label class="form-label">Момент времени</label><div class="inline-radio"><label><input type="radio" name="time_mode" value="final" checked> Итоговые результаты</label><label><input type="radio" name="time_mode" value="at"> На момент времени</label></div></div><div class="col-md-6"><label class="form-label">Минуты от начала тура</label><input class="form-control" type="number" name="minute" min="0" max="299" placeholder="0–299"></div></div><button class="btn btn-danger mt-3" type="submit">Сформировать таблицу</button></form></div><script>async function loadSchools(){const region=document.getElementById('region').value, s=document.getElementById('school');s.innerHTML='<option value="all">Все школы</option>';if(region==='Москва'||region==='Санкт-Петербург'){const r=await fetch('/api/schools?region='+encodeURIComponent(region));const data=await r.json();for(const x of data.schools){const o=document.createElement('option');o.value=x.school;o.textContent=x.school;s.appendChild(o)}s.disabled=false}else{s.disabled=true}}document.getElementById('region').addEventListener('change',loadSchools);loadSchools();</script>{% endblock %}
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <h1>Результаты</h1>
+    <p class="text-muted">Выберите параметры. Таблица откроется в новой вкладке.</p>
+    <form action="{{ url_for('results_table') }}" target="_blank" method="get">
+        <div class="row">
+            <div class="col-md-4">
+                <label class="form-label">Тур</label>
+                <select name="tour" class="form-select">
+                    <option value="first">Первый тур</option>
+                    <option value="second">Второй тур</option>
+                    <option value="both" selected>Оба тура</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Класс</label>
+                <select name="class_filter" class="form-select">
+                    {% for k,v in class_filters.items() %}
+                    <option value="{{k}}">{{v}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Оформление</label>
+                <select name="style" class="form-select">
+                    <option value="clean">Чистая таблица</option>
+                    <option value="diplomas">Выделить дипломы</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label class="form-label">Регион</label>
+                <select name="region" id="region" class="form-select">
+                    <option value="all">Все регионы</option>
+                    {% for r in regions %}
+                    <option value="{{r}}">{{r}}</option>
+                    {% endfor %}
+                </select>
+                <div class="muted-small">В списке регионы с 3+ участниками.</div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Школа</label>
+                <select name="school" id="school" class="form-select">
+                    <option value="all">Все школы</option>
+                </select>
+                <div class="muted-small">Для Москвы/Санкт-Петербурга — школы с 3+ участниками.</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label class="form-label">Момент времени</label>
+                <div class="inline-radio">
+                    <label>
+                        <input type="radio" name="time_mode" value="final" checked> Итоговые результаты</label>
+                    <label>
+                        <input type="radio" name="time_mode" value="at"> На момент времени</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Минуты от начала тура</label>
+                <input class="form-control" type="number" name="minute" min="0" max="299" placeholder="0–299">
+            </div>
+        </div>
+        <button class="btn btn-danger mt-3" type="submit">Сформировать таблицу</button>
+    </form>
+</div>
+<script>async function loadSchools(){
+    const region=document.getElementById('region').value, s=document.getElementById('school');
+    s.innerHTML='<option value="all">Все школы</option>';
+    if(region==='Москва'||region==='Санкт-Петербург'){
+        const r=await fetch('/api/schools?region='+encodeURIComponent(region));
+        const data=await r.json();
+        for(const x of data.schools){const o=document.createElement('option');
+            o.value=x.school;
+            o.textContent=x.school;
+            s.appendChild(o)
+        }
+        s.disabled=false
+    }
+    else {
+        s.disabled=true
+        }
+    }
+    document.getElementById('region').addEventListener('change',loadSchools);
+    loadSchools();
+</script>
+{% endblock %}
