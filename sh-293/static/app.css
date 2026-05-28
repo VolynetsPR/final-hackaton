@@ -1,1 +1,37 @@
-.hero{padding:34px 0}.hero h1{font-size:42px;line-height:1.05;margin:0 0 12px}.feature{height:100%}.muted-small{font-size:.92rem;color:#64748b}.standings a.participant-link{font-weight:600}.row-win-0 a,.row-win-1 a,.row-prize-0 a,.row-prize-1 a{color:#0f172a}.chart-img{width:100%;border:1px solid #e2e8f0;border-radius:14px;background:white}.inline-radio{display:flex;gap:10px;flex-wrap:wrap}.inline-radio label{padding:8px 10px;border:1px solid #e2e8f0;border-radius:12px;background:#fff}
+.hero
+{
+padding:34px 0
+}header
+.hero h1
+{
+font-size:42px;line-height:1.05;margin:0 0 12px
+}
+.feature
+{
+height:100%
+}
+.muted-small
+{
+font-size:.92rem;color:#64748b
+}
+.standings a.participant-link
+{
+font-weight:600
+}
+.row-win-0 a,.row-win-1 a,.row-prize-0 a,.row-prize-1 a
+{
+color:#0f172a
+}
+.chart-img
+{
+width:100%;border:1px solid #e2e8f0;border-radius:14px;background:white
+}
+.inline-radio
+{
+display:flex;gap:10px;flex-wrap:wrap
+}
+.inline-radio label
+{
+padding:8px 10px;border:1px solid #e2e8f0;border-radius:12px;background:#fff
+}
+

@@ -140,6 +140,12 @@ u {
     text-decoration: none;
 }
 
+a {
+    color: #535fbf; 
+    font-style: normal;
+    text-decoration: none;
+}
+ 
 i.first-to-solve {
     display: block;
     background-color: #c0ffc0;
