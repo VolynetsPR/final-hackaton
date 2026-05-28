@@ -31,12 +31,6 @@ def regions():
     if criterion not in CRITERIA: criterion='participants'
     return render_template('stats_regions.html', rows=region_stats(criterion), criteria=CRITERIA, current=criterion)
 
-@app.route('/schools')
-def schools():
-    criterion = request.args.get('criterion','participants')
-    if criterion not in CRITERIA: criterion='participants'
-    return render_template('stats_schools.html', rows=school_stats(criterion), criteria=CRITERIA, current=criterion)
-
 @app.route('/results')
 def results_form():
     selected_region = request.args.get('region','all')
