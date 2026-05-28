@@ -1,9 +1,8 @@
-# ВсОШ по информатике — Flask аналитика
+#  Аналитика ЗЭ ВсОШ по информатике 2024 года
 
 Стек: **Python + Flask + HTML/CSS + SQLite**.
 
-## Быстрый запуск
-
+## Запуск
 ```bash
 python3 -m pip install -r requirements.txt
 python3 init_db.py
