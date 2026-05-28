@@ -46,7 +46,7 @@ a:hover
     align-items:center;
     padding-top:14px;
     padding-bottom:14px
-}
+} 
 .navbar-brand
 {
     font-weight:800;
@@ -54,7 +54,7 @@ a:hover
 }
 .nav-link
 {
-    color:#375533
+    color:#121b9e
 }
 .card
 {
