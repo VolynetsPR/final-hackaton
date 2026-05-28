@@ -1,1 +1,31 @@
-{% extends 'base.html' %}{% block content %}<div class="card"><h1>Статистика по регионам</h1><div class="btn-group">{% for key,name in criteria.items() %}<a class="btn btn-outline-primary {% if key==current %}active{% endif %}" href="?criterion={{key}}">{{name}}</a>{% endfor %}</div><div class="table-responsive"><table class="table"><thead><tr><th>Место</th><th>Регион</th><th>{{ criteria[current] }}</th></tr></thead><tbody>{% for place,region,val in rows %}<tr><td>{{place}}</td><td>{{region}}</td><td>{{val}}</td></tr>{% endfor %}</tbody></table></div></div>{% endblock %}
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <h1>Статистика по регионам</h1>
+    <div class="btn-group">
+        {% for key,name in criteria.items() %}
+        <a class="btn btn-outline-primary {% if key==current %}active{% endif %}" href="?criterion={{key}}">{{name}} </a>
+        {% endfor %}
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr> 
+                    <th>Место</th>
+                    <th>Регион</th>
+                    <th>{{ criteria[current] }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for place,region,val in rows %}
+                <tr>
+                    <td>{{place}}</td>
+                    <td>{{region}}</td>
+                    <td>{{val}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
