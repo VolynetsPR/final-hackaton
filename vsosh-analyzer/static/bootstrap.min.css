@@ -18,7 +18,7 @@ body
 }
 a
 {
-    color:#1d4ed8;
+    color:#117a81;
     text-decoration:none
 }
 a:hover
@@ -110,7 +110,7 @@ flex-basis:100%
 .btn:hover
 {
     text-decoration:none;
-    background:rgba(0, 136, 255, 0.369)
+    background:rgba(87, 98, 250, 0.5)
 }
 .btn-primary,.btn-danger
 {
