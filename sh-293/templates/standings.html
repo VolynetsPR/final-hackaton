@@ -1,1 +1,52 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><title>{{title}}</title><link rel="stylesheet" href="{{ url_for('static', filename='standings2.css') }}"><link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}"></head><body><h2>{{title}}</h2><p>{{snap.title}} · сохранено на {{snap.minute}} минуте</p><table class="standings" id="standings"><thead><tr class="header"><th class="rankl">Место</th><th class="party">Участник</th>{% for h in headers %}<th class="problem">{{h}}</th>{% endfor %}<th class="solved">Баллы</th></tr></thead><tbody>{% for r in rows %}{% set dip=diplomas.get(r.id) %}{% if highlight and dip=='winner' %}{% set cls='row-win-' ~ (loop.index0 % 2) %}{% elif highlight and dip=='prize' %}{% set cls='row-prize-' ~ (loop.index0 % 2) %}{% else %}{% set cls='row0' ~ (loop.index0 % 2) %}{% endif %}<tr class="{{cls}}"><td class="rankl">{{r.rank}}</td><td class="party"><a class="participant-link" href="{{ url_for('participant', pid=r.id) }}" target="_blank">{{r.full_name}}</a> ({{r.region}}, {{r.class_num}} класс)</td>{% for f in fields %}<td class="ioiprob">{{r[f] or '.'}}</td>{% endfor %}<td>{{r.score}}</td></tr>{% endfor %}</tbody></table></body></html>
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='standings2.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+    </head>
+    <body>
+        <h2>{{title}}</h2>
+        <p>{{snap.title}} · сохранено на {{snap.minute}} минуте</p>
+        <table class="standings" id="standings">
+            <thead>
+                <tr class="header">
+                    <th class="rankl">Место</th>
+                    <th class="party">Участник</th>
+                    {% for h in headers %}
+                    <th class="problem">{{h}}</th>
+                    {% endfor %}
+                    <th class="solved">Баллы</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in rows %}
+                {% set dip=diplomas.get(r.id) %}
+                {% if highlight and dip=='winner' %}
+                {% set cls='row-win-' ~ (loop.index0 % 2) %}
+                {% elif highlight and dip=='prize' %}
+                {% set cls='row-prize-' ~ (loop.index0 % 2) %}
+                {% else %}{% set cls='row0' ~ (loop.index0 % 2) %}
+                {% endif %}
+                <tr class="{{cls}}">
+                    <td class="rankl">
+                        {{r.rank}}
+                    </td>
+                    <td class="party">
+                        <a class="participant-link" href="{{ url_for('participant', pid=r.id) }}" target="_blank">{{r.full_name}}
+                        </a> ({{r.region}}, {{r.class_num}} класс)
+                    </td>
+                    {% for f in fields %}
+                    <td class="ioiprob">{{r[f] or '.'}}
+                    </td>
+                    {% endfor %}
+                    <td>
+                        {{r.score}}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>
