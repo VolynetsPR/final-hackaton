@@ -39,7 +39,10 @@ h3 {
     font-size: medium;
 }
 
-table { 
+a {
+    color: #000000; 
+    font-style: normal;
+    text-decoration: none;
 }
 
 th {
@@ -140,12 +143,6 @@ u {
     text-decoration: none;
 }
 
-a {
-    color: #000000; 
-    font-style: normal;
-    text-decoration: none;
-}
- 
 i.first-to-solve {
     display: block;
     background-color: #c0ffc0;
@@ -158,12 +155,12 @@ s {
     font-size: x-small;
 }
 
-.row-win-0 { background-color: #ffeca8; }
-.row-win-1 { background-color: #fff2c2; }
-.row-prize-0 { background-color: #cdfff3; }
-.row-prize-1 { background-color: #e7fff9; }
+.row-win-0 { background-color: #fff1bc; }
+.row-win-1 { background-color: #fffbea; }
+.row-prize-0 { background-color: #e4f8f3; }
+.row-prize-1 { background-color: #f5ffff; }
 .row-selected-0 { background-color: #c8e8f8; }
-.row-selected-1 { background-color: #e7f7ff; }
+.row-selected-1 { background-color: #d0f0ff; }
 
 .row00 { background-color: #f8f8f8; }
 .row01 { background-color: #ffffff; }

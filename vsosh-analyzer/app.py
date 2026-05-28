@@ -1,7 +1,6 @@
 import os, io, base64
 from flask import Flask, render_template, request, redirect, url_for, send_file
-import matplotlib
-matplotlib.use('Agg')
+
 import matplotlib.pyplot as plt
 from db import DB_PATH, get_connection
 from services import (region_stats, school_stats, regions_with_min, schools_with_min,

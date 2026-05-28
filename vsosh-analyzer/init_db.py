@@ -2,6 +2,7 @@ import os, glob, shutil
 from db import DB_PATH, get_connection, init_schema
 from parser_utils import parse_html_file
 from school_utils import _load as load_school_rows
+from school_utils import get_school
 
 UPLOADS = os.path.join(os.path.dirname(__file__), 'uploads')
 
