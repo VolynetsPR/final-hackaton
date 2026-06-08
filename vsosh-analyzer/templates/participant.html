@@ -61,4 +61,29 @@
         </div>
     </div>
 </div>
+<div class="card">
+    <h2>Графики баллов</h2>
+    <div class="row">
+        {% for mode in ['first','second','both'] %}
+        <div class="col-md-4">
+            Графики рисуются...
+            <!-- не метчаться аргументы почему-то -> отключаю, не рабает -->
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="card">
+    <h2>Графики места</h2>
+    <div class="row">
+        {% for mode in ['first','second','both'] %}
+        <div class="col-md-4">
+            Графики строятся...
+            <div class="col-md-4">
+            </div>
+            
+            <!-- не метчаться аргументы почему-то -> отключаю, не рабает -->
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

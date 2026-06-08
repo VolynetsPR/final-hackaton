@@ -1,6 +1,8 @@
 import os, io, base64
 from flask import Flask, render_template, request, redirect, url_for, send_file
-
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 from db import DB_PATH, get_connection
 from services import (region_stats, school_stats, regions_with_min, schools_with_min,
     select_snapshot, filtered_result_rows, PROBLEM_HEADERS, SCORE_FIELDS, diploma_map,
@@ -28,6 +30,12 @@ def regions():
     criterion = request.args.get('criterion','participants')
     if criterion not in CRITERIA: criterion='participants'
     return render_template('stats_regions.html', rows=region_stats(criterion), criteria=CRITERIA, current=criterion)
+
+@app.route('/schools')
+def schools():
+    criterion = request.args.get('criterion','participants')
+    if criterion not in CRITERIA: criterion='participants'
+    return render_template('stats_schools.html', rows=school_stats(criterion), criteria=CRITERIA, current=criterion)
 
 @app.route('/results')
 def results_form():
