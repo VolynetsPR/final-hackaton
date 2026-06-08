@@ -7,7 +7,6 @@ from db import DB_PATH, get_connection
 from services import (region_stats, school_stats, regions_with_min, schools_with_min,
     select_snapshot, filtered_result_rows, PROBLEM_HEADERS, SCORE_FIELDS, diploma_map,
     participant_info, latest_snapshot_id, rank_ranges)
-import init_db
 
 app = Flask(__name__)
 
@@ -20,6 +19,14 @@ CLASS_FILTERS = {
     '10_down':'10 класс и младше','9_down':'9 класс и младше','8_down':'8 класс и младше'
 }
 TOUR_MODES = {'first':1, 'second':2, 'both':3}
+
+@app.before_request
+def ensure_db():
+    if not os.path.exists(DB_PATH) and request.endpoint != 'static':
+        try:
+            import init_db; init_db.main()
+        except Exception:
+            pass
 
 @app.route('/')
 def index():
@@ -81,6 +88,54 @@ def participant(pid):
     info=participant_info(pid)
     if not info: return render_template('message.html', title='Не найдено', message='Участник не найден'), 404
     return render_template('participant.html', info=info)
+
+def chart_points(pid, kind, mode):
+    con=get_connection(); points=[]
+    if mode in ('first','both'):
+        for s in con.execute('SELECT * FROM snapshots WHERE tour=1 ORDER BY minute'):
+            r=con.execute('SELECT * FROM results WHERE snapshot_id=? AND participant_id=?',(s['id'],pid)).fetchone()
+            if not r: continue
+            score=sum(r[f] or 0 for f in SCORE_FIELDS[1])
+            y=score
+            if kind=='rank':
+                allr=[{'score':sum(rr[f] or 0 for f in SCORE_FIELDS[1])} for rr in con.execute('SELECT p1,p2,p3,p4 FROM results WHERE snapshot_id=?',(s['id'],))]
+                y=rank_ranges(allr,'score')[score][1]
+            points.append((s['minute'], y))
+    if mode in ('second','both'):
+        for s in con.execute('SELECT * FROM snapshots WHERE tour=2 ORDER BY minute'):
+            r=con.execute('SELECT * FROM results WHERE snapshot_id=? AND participant_id=?',(s['id'],pid)).fetchone()
+            if not r: continue
+            fields = SCORE_FIELDS[2] if mode=='second' else SCORE_FIELDS[3]
+            score=sum(r[f] or 0 for f in fields)
+            y=score
+            if kind=='rank':
+                sel=','.join(fields)
+                allr=[{'score':sum(rr[f] or 0 for f in fields)} for rr in con.execute(f'SELECT {sel} FROM results WHERE snapshot_id=?',(s['id'],))]
+                y=rank_ranges(allr,'score')[score][1]
+            x=s['minute'] if mode=='second' else 300+s['minute']
+            points.append((x,y))
+    con.close(); return points
+
+@app.route('/participant/<int:pid>/chart/<kind>/<mode>.png')
+def chart(pid, kind, mode):
+    if kind not in ('score','rank') or mode not in ('first','second','both'):
+        return 'bad chart', 400
+    pts=chart_points(pid,kind,mode)
+    fig, ax = plt.subplots(figsize=(8,4), dpi=1000)
+    if pts:
+        x,y=zip(*pts)
+        ax.plot(x,y, marker='o', linewidth=2, color='#0F0F0F')
+    ax.grid(True, alpha=.25)
+    ax.set_xlabel('Минуты с начала ' + ('олимпаиды' if mode=='both' else 'тура'))
+    ax.set_ylabel('Баллы' if kind=='score' else 'Место')
+    ax.set_title(('Баллы' if kind=='score' else 'Место') + '(' + {'first':'первый тур','second':'второй тур','both':'оба тура'}[mode] + ')')
+    if kind=='rank': ax.invert_yaxis()
+    fig.tight_layout()
+    bio=io.BytesIO()
+    fig.savefig(bio, format='png')
+    plt.close(fig)
+    bio.seek(0)
+    return send_file(bio, mimetype='image/png')
 
 if __name__ == '__main__':
     app.run(debug=True)
